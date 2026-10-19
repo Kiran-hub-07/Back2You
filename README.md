@@ -259,26 +259,6 @@ Ideas for future improvements (not currently implemented):
 - [ ] Automated tests and CI checks
 - [ ] Deployment guide and hosted demo
 
-## 🤝 Contributing
-
-Contributions, bug reports, design suggestions, and documentation improvements are welcome!
-
-1. Fork this repository.
-2. Create a branch: `git checkout -b feature/your-feature`.
-3. Make and test your changes.
-4. Commit: `git commit -m "Add your feature"`.
-5. Push your branch and open a pull request.
-
-For major changes, open an issue first so we can discuss the approach.
-
-## 🌟 Support the project
-
-If Back2You helps you learn full-stack development or inspires a campus project:
-
-- ⭐ **Star the repository** to show support.
-- 🍴 **Fork it** to explore or extend the code.
-- 🐛 **Open an issue** to suggest an improvement or report a bug.
-- 📣 **Share it** with students, developers, and campus communities.
 
 **Built to make lost-and-found a little less frustrating. 💙**
 
