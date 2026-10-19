@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#172B4D">
+  <title>Back2You | SRET Campus Lost &amp; Found</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <noscript><p class="noscript">Back2You needs JavaScript enabled.</p></noscript>
+
+  <!-- ============ SIGN-IN ============ -->
+  <section id="signInScreen" class="signin-screen" hidden>
+    <div class="signin-glow glow-a"></div>
+    <div class="signin-glow glow-b"></div>
+
+    <div class="signin-wrap">
+      <div class="signin-brand">
+        <div class="signin-logo">↗</div>
+        <h1>Back2You</h1>
+        <p class="brand-tagline">SRET CAMPUS LOST &amp; FOUND</p>
+      </div>
+
+      <div class="signin-card">
+        <span class="pill">🔒 SRET MEMBERS ONLY</span>
+        <h2>Welcome back.</h2>
+        <p class="signin-description">
+          Students and faculty submit lost &amp; found reports. SRET management verifies
+          every report and handles every handover.
+        </p>
+
+        <div class="role-switch" role="tablist" aria-label="Sign in as">
+          <button type="button" class="active" data-role="student" role="tab" aria-selected="true">Student</button>
+          <button type="button" data-role="faculty" role="tab" aria-selected="false">Faculty</button>
+          <button type="button" data-role="management" role="tab" aria-selected="false">Management</button>
+        </div>
+
+        <form id="memberForm">
+          <label for="memberName">Full name</label>
+          <input id="memberName" type="text" placeholder="Enter your full name" autocomplete="name" maxlength="70" required>
+
+          <label for="memberId" id="memberIdLabel">Register number</label>
+          <input id="memberId" class="uppercase" type="text" placeholder="e.g. 211CS1045" autocomplete="off" maxlength="14" required>
+
+          <label for="memberEmail">College email</label>
+          <input id="memberEmail" type="email" placeholder="yourname@sret.edu.in" autocomplete="email" required>
+
+          <label for="memberDept">Department</label>
+          <select id="memberDept" required>
+            <option value="">Choose your department</option>
+            <option>AI &amp; ML</option>
+            <option>AI &amp; DA</option>
+            <option>EEE</option>
+            <option>CYBER SECURITY</option>
+            <option>ECE</option>
+          </select>
+
+          <p id="memberError" class="form-error" role="alert" hidden></p>
+          <button class="btn btn-primary btn-block" type="submit">Enter campus portal <span>→</span></button>
+        </form>
+
+        <form id="mgmtForm" hidden>
+          <label for="mgmtEmail">Management email</label>
+          <input id="mgmtEmail" type="email" placeholder="name@sret.edu.in" autocomplete="username">
+
+          <label for="mgmtCode">Access code</label>
+          <input id="mgmtCode" type="password" placeholder="Issued by the college office" autocomplete="current-password">
+
+          <p id="mgmtError" class="form-error" role="alert" hidden></p>
+          <button class="btn btn-primary btn-block" type="submit">Enter management console <span>→</span></button>
+        </form>
+
+        <p class="signin-note">🔒 Only SRET emails are accepted. Reports are stored securely and are visible only to management.</p>
+      </div>
+      <p class="signin-footer">© 2026 Back2You · SRET Campus Project</p>
+    </div>
+  </section>
+
+  <!-- ============ MAIN APP ============ -->
+  <div id="appShell" hidden>
+    <header class="site-header">
+      <nav class="navbar container">
+        <a href="#home" class="logo"><span class="logo-icon">↗</span><span>Back2You</span><span class="campus-label">SRET</span></a>
+
+        <div class="nav-links">
+          <a href="#home">Home</a>
+          <a href="#console" data-mgmt hidden>Console</a>
+          <a href="#browse">Browse</a>
+          <a href="#history">History</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#safety">Safety</a>
+        </div>
+
+        <div class="nav-actions">
+          <button class="btn btn-primary" type="button" data-open-report>＋ Report item</button>
+          <div class="user-chip">
+            <div class="profile-avatar" id="profileAvatar">S</div>
+            <div class="profile-info"><strong id="profileName">Student</strong><small id="profileMeta">Department</small></div>
+            <button id="signOutBtn" class="signout-btn" type="button" title="Sign out" aria-label="Sign out">↪</button>
+          </div>
+        </div>
+
+        <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      </nav>
+
+      <div id="mobileNav" class="mobile-nav" hidden>
+        <a href="#home">Home</a>
+        <a href="#console" data-mgmt hidden>Console</a>
+        <a href="#browse">Browse</a>
+        <a href="#history">History</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#safety">Safety</a>
+        <button class="btn btn-primary" type="button" data-open-report>＋ Report item</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section id="home" class="hero-section">
+        <div class="hero-glow hero-glow-one"></div>
+        <div class="hero-glow hero-glow-two"></div>
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">MADE FOR SRET</span>
+            <h1>Lost something?<br><span class="grad">Let's bring it</span> back to you.</h1>
+            <p class="hero-description">
+              Report lost belongings or items you've found. SRET management verifies every
+              report, matches owners and records each handover.
+            </p>
+            <div class="hero-actions">
+              <button class="btn btn-primary btn-large" type="button" data-open-report>Report an item <span>→</span></button>
+              <a class="btn btn-secondary btn-large" href="#browse">Browse verified items</a>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="terminal-card">
+              <div class="terminal-bar"><span></span><span></span><span></span><b>How it works</b></div>
+              <ol class="pipeline">
+                <li class="done"><i>01</i><div><strong>Report submitted</strong><small>Student or faculty logs a lost / found item</small></div></li>
+                <li class="active"><i>02</i><div><strong>Management verifies</strong><small>The office reviews every report before it goes live</small></div></li>
+                <li><i>03</i><div><strong>Claim &amp; handover</strong><small>Owner is verified in person and the item is returned</small></div></li>
+              </ol>
+              <div class="terminal-foot"><span class="status-dot"></span> system online · records visible to management only</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STATS -->
+      <section class="stats-section">
+        <div class="container stats-grid">
+          <div class="stat-item"><span class="stat-icon">⌕</span><div><strong id="lostCount">0</strong><small>Lost items</small></div></div>
+          <div class="stat-item"><span class="stat-icon found-stat">✓</span><div><strong id="foundCount">0</strong><small>Found items</small></div></div>
+          <div class="stat-item"><span class="stat-icon people-stat">♡</span><div><strong id="returnedCount">0</strong><small>Returned to owners</small></div></div>
+        </div>
+      </section>
+
+      <!-- ============ MANAGEMENT CONSOLE ============ -->
+      <section id="console" class="console-section section-padding" data-mgmt hidden>
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">MANAGEMENT CONSOLE</span>
+              <h2>Verification <span class="grad">desk</span></h2>
+              <p>Every submission lands here first. These records are visible only to management.</p>
+            </div>
+            <div class="export-box">
+              <select id="exportWhat" aria-label="Data to export">
+                <option value="reports">Reports</option>
+                <option value="claims">Claims</option>
+                <option value="history">History</option>
+              </select>
+              <select id="exportFormat" aria-label="Export format">
+                <option value="csv">CSV</option>
+                <option value="json">JSON</option>
+              </select>
+              <button id="exportBtn" class="btn btn-outline" type="button">Export</button>
+            </div>
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi kpi-warn"><small>Awaiting verification</small><strong id="kPending">0</strong></div>
+            <div class="kpi kpi-warn"><small>Pending claims</small><strong id="kClaims">0</strong></div>
+            <div class="kpi"><small>Live on board</small><strong id="kVerified">0</strong></div>
+            <div class="kpi"><small>Handed over</small><strong id="kReturned">0</strong></div>
+            <div class="kpi"><small>Rejected</small><strong id="kRejected">0</strong></div>
+          </div>
+
+          <div class="tab-row" role="tablist">
+            <button class="console-tab active" type="button" data-panel="reviewPanel">Verify reports <span id="tabPending" class="count">0</span></button>
+            <button class="console-tab" type="button" data-panel="claimsPanel">Claims <span id="tabClaims" class="count">0</span></button>
+            <button class="console-tab" type="button" data-panel="recordsPanel">All records</button>
+            <button class="console-tab" type="button" data-panel="uncollectedPanel">Uncollected found items <span id="tabUncollected" class="count">0</span></button>
+            <button class="console-tab" type="button" data-panel="reportsPanel">Weekly / monthly reports</button>
+          </div>
+
+          <div id="reviewPanel" class="console-panel">
+            <div id="reviewList" class="stack"></div>
+            <div id="reviewEmpty" class="panel-empty" hidden>✓ Nothing to verify. You're all caught up.</div>
+          </div>
+
+          <div id="claimsPanel" class="console-panel" hidden>
+            <div id="claimList" class="stack"></div>
+            <div id="claimEmpty" class="panel-empty" hidden>No pending claims.</div>
+          </div>
+
+          <div id="recordsPanel" class="console-panel" hidden>
+            <div class="history-tools">
+              <div class="search-box"><span>⌕</span>
+                <input id="recordSearch" type="search" placeholder="Search item, location, reporter name or ID..." aria-label="Search records">
+              </div>
+              <select id="recordStatus" aria-label="Filter by status">
+                <option value="all">All statuses</option>
+                <option value="pending">Pending</option>
+                <option value="verified">Verified</option>
+                <option value="returned">Handed over</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+            <div class="table-wrap">
+              <table class="records">
+                <thead><tr><th>Item</th><th>Type</th><th>Status</th><th>Reported by</th><th>Date</th><th>Claims</th></tr></thead>
+                <tbody id="recordsBody"></tbody>
+              </table>
+            </div>
+            <div id="recordsEmpty" class="panel-empty" hidden>No records match.</div>
+          </div>
+
+          <div id="uncollectedPanel" class="console-panel" hidden>
+            <p class="notice panel-note">Found items that nobody has collected yet, oldest first. Items waiting 7 days or more are highlighted so the office can follow up.</p>
+            <div class="table-wrap">
+              <table class="records">
+                <thead><tr><th>Item</th><th>Found at</th><th>Date found</th><th>Waiting</th><th>Status</th><th>Found by</th><th>Claims</th></tr></thead>
+                <tbody id="uncollectedBody"></tbody>
+              </table>
+            </div>
+            <div id="uncollectedEmpty" class="panel-empty" hidden>✓ Every found item has been collected.</div>
+          </div>
+
+          <div id="reportsPanel" class="console-panel" hidden>
+            <div class="report-controls">
+              <div class="period-switch" role="tablist" aria-label="Report period">
+                <button type="button" class="active" data-period="week">Weekly</button>
+                <button type="button" data-period="month">Monthly</button>
+              </div>
+              <div class="period-nav">
+                <button id="periodPrev" class="btn btn-ghost btn-small" type="button" aria-label="Previous period">←</button>
+                <strong id="periodLabel">—</strong>
+                <button id="periodNext" class="btn btn-ghost btn-small" type="button" aria-label="Next period">→</button>
+              </div>
+              <button id="periodExport" class="btn btn-outline btn-small" type="button">Download CSV</button>
+            </div>
+
+            <div id="periodKpis" class="kpi-grid summary-kpis"></div>
+
+            <div class="report-grid">
+              <div class="chart-card">
+                <h3>Activity per day</h3>
+                <div class="chart-legend"><span class="dot dot-a"></span>Reports received <span class="dot dot-b"></span>Handed over</div>
+                <div id="periodChart" class="bar-chart"></div>
+              </div>
+              <div class="chart-card">
+                <h3>By category</h3>
+                <ul id="periodCategories" class="rank-list"></ul>
+                <h3 class="rank-title">Top locations</h3>
+                <ul id="periodLocations" class="rank-list"></ul>
+              </div>
+            </div>
+
+            <h3 class="table-title">Reports in this period</h3>
+            <div class="table-wrap">
+              <table class="records">
+                <thead><tr><th>Item</th><th>Type</th><th>Status</th><th>Reported by</th><th>Reported on</th></tr></thead>
+                <tbody id="periodBody"></tbody>
+              </table>
+            </div>
+            <div id="periodEmpty" class="panel-empty" hidden>No reports in this period.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BROWSE -->
+      <section id="browse" class="browse-section section-padding">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">VERIFIED BY MANAGEMENT</span>
+              <h2>Find what you're <span class="grad">looking for.</span></h2>
+              <p>Only reports checked by SRET management appear here.</p>
+            </div>
+            <button class="btn btn-outline" type="button" data-open-report>＋ Post a report</button>
+          </div>
+
+          <div class="browse-toolbar">
+            <div class="search-box"><span>⌕</span>
+              <input id="searchInput" type="search" placeholder="Search item, place or keyword..." aria-label="Search reports">
+              <kbd>Ctrl K</kbd>
+            </div>
+            <select id="categoryFilter" aria-label="Filter by category">
+              <option value="all">All categories</option>
+              <option>Electronics</option><option>ID &amp; Cards</option><option>Bags</option>
+              <option>Books &amp; Notes</option><option>Accessories</option><option>Clothing</option><option>Other</option>
+            </select>
+            <select id="sortSelect" aria-label="Sort reports">
+              <option value="new">Newest first</option>
+              <option value="old">Oldest first</option>
+              <option value="az">Name A–Z</option>
+            </select>
+          </div>
+
+          <div id="hotspotRow" class="hotspot-row" aria-label="Popular campus locations"></div>
+
+          <div class="tab-row" role="tablist">
+            <button class="filter-tab active" data-type="all" type="button">All <span id="allTabCount" class="count">0</span></button>
+            <button class="filter-tab" data-type="Lost" type="button">⌕ Lost</button>
+            <button class="filter-tab" data-type="Found" type="button">✓ Found</button>
+            <button class="filter-tab" data-type="mine" data-member type="button">♡ My reports</button>
+          </div>
+
+          <div id="itemsGrid" class="items-grid"></div>
+
+          <div id="emptyState" class="empty-state" hidden>
+            <div class="empty-icon">⌕</div>
+            <h3>No reports found</h3>
+            <p>Try a different search, or report the item yourself.</p>
+            <button class="btn btn-primary" type="button" data-open-report>＋ Report an item</button>
+          </div>
+
+          <div class="browse-bottom">
+            <span id="resultsText">Loading…</span>
+            <button id="clearFiltersBtn" class="text-button" type="button">Clear filters ↗</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- HISTORY -->
+      <section id="history" class="history-section section-padding">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow" id="historyEyebrow">YOUR ACTIVITY</span>
+              <h2>History</h2>
+              <p id="historySubtitle">Every report, claim and handover linked to you.</p>
+            </div>
+          </div>
+          <div class="history-tools">
+            <div class="search-box"><span>⌕</span>
+              <input id="historySearch" type="search" placeholder="Search by item, name or ID..." aria-label="Search history">
+            </div>
+            <select id="historyFilter" aria-label="Filter history by action">
+              <option value="all">All activity</option>
+              <option value="REPORT_CREATED">Reports posted</option>
+              <option value="REPORT_VERIFIED">Verified</option>
+              <option value="REPORT_REJECTED">Rejected</option>
+              <option value="CLAIM_SENT">Claims sent</option>
+              <option value="CLAIM_REJECTED">Claims rejected</option>
+              <option value="ITEM_HANDED_OVER">Handovers</option>
+              <option value="HANDOVER_REVERSED">Reversed handovers</option>
+            </select>
+          </div>
+          <ul id="historyList" class="history-list"></ul>
+          <div id="historyEmpty" class="panel-empty" hidden>No activity yet.</div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section id="how-it-works" class="how-section section-padding">
+        <div class="container">
+          <div class="center-heading">
+            <span class="eyebrow">SIMPLE · VERIFIED · CAMPUS-POWERED</span>
+            <h2>Lost today. <span class="grad">Found tomorrow.</span></h2>
+            <p>Three steps, with SRET management in control of each one that matters.</p>
+          </div>
+          <div class="steps-grid">
+            <article class="step-card"><div class="step-number">01</div><div class="step-icon">✎</div><h3>Submit a report</h3><p>Tell management what you lost or found, with the location and a few identifying details.</p></article>
+            <article class="step-card"><div class="step-number">02</div><div class="step-icon step-violet">⛨</div><h3>Management verifies</h3><p>The office checks your report. Approved items appear on the board; you can track the status.</p></article>
+            <article class="step-card"><div class="step-number">03</div><div class="step-icon step-green">♡</div><h3>Claim &amp; collect</h3><p>Send a claim with a detail only the owner knows, then visit the office. Management records the handover.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <!-- SAFETY -->
+      <section id="safety" class="safety-section section-padding">
+        <div class="container">
+          <div class="center-heading">
+            <span class="eyebrow">SAFE · PRIVATE · RECORDED</span>
+            <h2>Built for a <span class="grad">trusted campus.</span></h2>
+            <p>Back2You is open only to SRET members. Every action is logged for management.</p>
+          </div>
+          <div class="safety-grid">
+            <article class="safety-card"><span>🛡️</span><h3>Verified members</h3><p>Only SRET college emails and valid ID numbers can sign in.</p></article>
+            <article class="safety-card"><span>🏛️</span><h3>Management-only records</h3><p>Reporter details, claims and handovers are visible only to management.</p></article>
+            <article class="safety-card"><span>🔎</span><h3>Prove ownership</h3><p>Describe a unique detail that is not shown in the report.</p></article>
+            <article class="safety-card"><span>🔒</span><h3>Keep it private</h3><p>Never post ID numbers, phone numbers or addresses in a report.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta-section">
+        <div class="container cta-inner">
+          <div>
+            <span class="eyebrow">BE SOMEONE'S GOOD NEWS</span>
+            <h2>Found something on campus?</h2>
+            <p>Report it. Management will verify it and help it find its owner.</p>
+          </div>
+          <button class="btn btn-primary btn-large" type="button" data-open-report>Report it now <span>→</span></button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <a href="#home" class="logo"><span class="logo-icon">↗</span> Back2You <span class="campus-label">SRET</span></a>
+        <p>Connecting the SRET community, one item at a time.</p>
+        <span>SRET Campus · © 2026 Back2You</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ============ DIALOGS ============ -->
+  <dialog id="reportDialog" class="modal">
+    <div class="modal-header">
+      <div><span class="eyebrow">NEW REPORT</span><h2>Report an item</h2><p>Every detail helps management match it faster.</p></div>
+      <button class="close-dialog" data-close="reportDialog" type="button" aria-label="Close">×</button>
+    </div>
+    <form id="reportForm" class="modal-form">
+      <p id="reportNote" class="notice"></p>
+      <div class="form-row two-columns">
+        <div>
+          <label for="reportType">Report type *</label>
+          <select id="reportType" required><option value="Lost">I lost an item</option><option value="Found">I found an item</option></select>
+        </div>
+        <div>
+          <label for="reportCategory">Category *</label>
+          <select id="reportCategory" required>
+            <option>Electronics</option><option>ID &amp; Cards</option><option>Bags</option>
+            <option>Books &amp; Notes</option><option>Accessories</option><option>Clothing</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="itemName">Item name *</label>
+      <input id="itemName" type="text" placeholder="e.g. Black water bottle" maxlength="70" required>
+
+      <label for="itemDescription">Description *</label>
+      <textarea id="itemDescription" rows="3" maxlength="350" placeholder="Colour, brand, identifying features..." required></textarea>
+
+      <div class="form-row two-columns">
+        <div><label for="itemLocation">Location *</label><input id="itemLocation" type="text" placeholder="e.g. Main library" maxlength="100" required></div>
+        <div><label for="itemDate">Date *</label><input id="itemDate" type="date" required></div>
+      </div>
+
+      <label for="itemPhoto">Photo (optional)</label>
+      <input id="itemPhoto" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+      <small class="field-help">JPG, PNG, WEBP or GIF under 1 MB. Avoid personal or sensitive information.</small>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" data-close="reportDialog" type="button">Cancel</button>
+        <button id="reportSubmit" class="btn btn-primary" type="submit">Submit report <span>→</span></button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="detailDialog" class="modal detail-modal">
+    <button class="close-dialog detail-close" data-close="detailDialog" type="button" aria-label="Close">×</button>
+    <div id="detailContent"></div>
+  </dialog>
+
+  <dialog id="handoverDialog" class="modal">
+    <div class="modal-header">
+      <div><span class="eyebrow">MANAGEMENT</span><h2>Confirm handover</h2><p>Record who received the item. This is saved to history.</p></div>
+      <button class="close-dialog" data-close="handoverDialog" type="button" aria-label="Close">×</button>
+    </div>
+    <form id="handoverForm" class="modal-form">
+      <p id="handoverSummary" class="summary-box"></p>
+      <label for="receiverName">Received by (name) *</label>
+      <input id="receiverName" type="text" maxlength="70" required>
+      <label for="receiverIdNo">Receiver's register number / employee ID *</label>
+      <input id="receiverIdNo" class="uppercase" type="text" maxlength="14" autocomplete="off" required>
+      <label for="handoverNote">Note (optional)</label>
+      <textarea id="handoverNote" rows="2" maxlength="200" placeholder="e.g. Verified with college ID card"></textarea>
+      <p id="handoverError" class="form-error" role="alert" hidden></p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" data-close="handoverDialog" type="button">Cancel</button>
+        <button class="btn btn-primary" type="submit">Mark as handed over</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="rejectDialog" class="modal">
+    <div class="modal-header">
+      <div><span class="eyebrow">MANAGEMENT</span><h2 id="rejectTitle">Reject</h2><p>The reason is saved to history.</p></div>
+      <button class="close-dialog" data-close="rejectDialog" type="button" aria-label="Close">×</button>
+    </div>
+    <form id="rejectForm" class="modal-form">
+      <p id="rejectSummary" class="summary-box"></p>
+      <label for="rejectReason">Reason *</label>
+      <textarea id="rejectReason" rows="3" maxlength="200" placeholder="e.g. Not enough detail / duplicate report" required></textarea>
+      <p id="rejectError" class="form-error" role="alert" hidden></p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" data-close="rejectDialog" type="button">Cancel</button>
+        <button class="btn btn-danger" type="submit">Reject</button>
+      </div>
+    </form>
+  </dialog>
+
+  <button id="backTop" class="back-top" type="button" aria-label="Back to top" hidden>↑</button>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
