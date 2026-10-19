@@ -43,9 +43,17 @@ Lost belongings are a common campus problem. Traditional lost-and-found systems 
 
 ## 🖼️ Screenshots
 
-*Add real screenshots after running the app. Screenshots are one of the easiest ways to help visitors understand the project quickly.*
 
-Suggested screenshots: **Sign-in**, **Lost & Found Board**, **Report an Item**, **Management Console**, and **Analytics Dashboard**.
+<img width="800" height="300" alt="image" src="https://github.com/user-attachments/assets/be8e7252-4b65-408c-9b99-244cef729df4" />
+<img width="800" height="300" alt="image" src="https://github.com/user-attachments/assets/1be4718f-fa43-436a-bf26-2fc3ed757f5d" />
+<img width="800" height="300" alt="image" src="https://github.com/user-attachments/assets/53dca092-97bb-4164-a145-8314e3f8d503" />
+<img width="800" height="300" alt="image" src="https://github.com/user-attachments/assets/79704248-5ff9-43b6-b326-d63331ac0665" />
+<img width="800" height="300" alt="image" src="https://github.com/user-attachments/assets/5e7ac946-087b-47b8-a950-19af623cb69b" />
+<img width="800" height="300" alt="image" src="https://github.com/user-attachments/assets/2cc3be3b-5366-4bdf-a39a-60d4a35d8bb0" />
+<img width="800" height="300" alt="image" src="https://github.com/user-attachments/assets/1a6343b3-0281-472f-bd07-a068a8e37f15" />
+
+
+
 
 <!-- Example after adding an image to docs/screenshots/:
 ![Back2You Dashboard](docs/screenshots/dashboard.png)
@@ -53,16 +61,35 @@ Suggested screenshots: **Sign-in**, **Lost & Found Board**, **Report an Item**, 
 
 ## 🔄 How it works
 
+
 ```mermaid
 flowchart TD
-    A[Student or faculty signs in] --> B[Submit a lost or found report]
-    B --> C{Management review}
-    C -->|Rejected| D[Reporter sees rejection reason]
-    C -->|Verified| E[Item appears on board]
-    E --> F[Another campus member sends a claim]
-    F --> G[Management verifies ownership in person]
-    G --> H[Item handed over and history updated]
+    A["Student or Faculty Signs In"]
+    B["Submit Lost or Found Report"]
+    C["Management Reviews Report"]
+    D{"Report Approved?"}
+    E["Publish Item on Campus Board"]
+    F["Reject Report"]
+    G["Owner Submits Claim"]
+    H["Management Verifies Ownership"]
+    I{"Claim Valid?"}
+    J["Approve Claim and Handover Item"]
+    K["Reject Claim"]
+    L["Update Records and Analytics"]
+
+    A --> B
+    B --> C
+    C --> D
+    D -->|Yes| E
+    D -->|No| F
+    E --> G
+    G --> H
+    H --> I
+    I -->|Yes| J
+    I -->|No| K
+    J --> L
 ```
+
 
 **Privacy by design:** Claims go to management, not directly to the person who posted the item. Only authorized management accounts can access private reporter details and management-only records.
 
